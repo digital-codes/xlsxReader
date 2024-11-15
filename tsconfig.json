@@ -1,17 +1,17 @@
 {
   "compilerOptions": {
-    /**/
+    /* */
     "target": "ES2020",
-    "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ES2020", "DOM"],
-    /**/
-    /*
+    /* */
+    /* 
     "target": "ES6",                       // Specify ECMAScript target version
     "lib": ["es2019","dom"],                // Specify library files to be included in the compilation
     "module":"ES6",
-    */ 
-    "declaration": true,               // Generate .d.ts files
+     */ 
+     "useDefineForClassFields": true,
+     "declaration": true,               // Generate .d.ts files
     "declarationMap": true,            // Generate .d.ts.map files (optional, for debugging)
     "emitDeclarationOnly": false,      // Emit both .js and .d.ts files
     "strict": true,                         // Enable all strict type-checking options
