@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    /**/
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM"],
+    /**/
+    /*
+    "target": "ES6",                       // Specify ECMAScript target version
+    "lib": ["es2019","dom"],                // Specify library files to be included in the compilation
+    "module":"ES6",
+    */ 
+    "declaration": true,               // Generate .d.ts files
+    "declarationMap": true,            // Generate .d.ts.map files (optional, for debugging)
+    "emitDeclarationOnly": false,      // Emit both .js and .d.ts files
+    "strict": true,                         // Enable all strict type-checking options
+    "esModuleInterop": true,                // Allows default import from CommonJS modules
+    "skipLibCheck": true,                   // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true, // Ensure file name consistency across imports
+    "moduleResolution": "node",             // Use Node module resolution
+    "outDir": "./dist",                     // Output directory for compiled files
+    "rootDir": "./src",                     // Specify the root directory of input files
+    "types": ["jest"]                       // Include Jest types for testing
+  },
+  "include": ["src/**/*.ts"],                  // Include all files in the src directory
+  "exclude": ["node_modules", "dist"]       // Exclude node_modules and dist from compilation
+}
