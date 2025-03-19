@@ -27,14 +27,22 @@ async function readWorksheetByName(input: Blob | ArrayBuffer, sheetName: string)
     const buffer = input instanceof Blob ? await input.arrayBuffer() : input; // Convert Blob to ArrayBuffer if needed
     const zipContent = await zip.loadAsync(buffer);
     console.log(zipContent.files);
+    const zipFiles = Object.keys(zipContent.files);
+    console.log("Files:", zipFiles)
+    if (!zipFiles.includes('xl/workbook.xml')) throw new Error('Workbook metadata not found.');
 
     // Read workbook metadata to find the sheet ID corresponding to the name
     const workbookXML = await zipContent.file('xl/workbook.xml')?.async('string');
     if (!workbookXML) throw new Error('Workbook metadata not found.');
+    console.log("Workbook XML:", workbookXML)
+
+
 
     const parser = new DOMParser();
+
     const workbookDoc = parser.parseFromString(workbookXML, 'application/xml');
     const sheets = workbookDoc.getElementsByTagName('sheet');
+    console.log("#sheets:", sheets.length)
 
     let sheetId: string | null = null;
     for (let i = 0; i < sheets.length; i++) {
@@ -52,13 +60,18 @@ async function readWorksheetByName(input: Blob | ArrayBuffer, sheetName: string)
     const sheetPath = `xl/worksheets/sheet${sheetId}.xml`;
     console.log("Sheet Path:", sheetPath)
 
-    const sheetXML = await zipContent.file(sheetPath)?.async('string'); 
+    const sheetXML_ = zipContent.file(sheetPath)
+    console.log("Sheet XML:", sheetXML_)
+
+    const sheetXML = zipContent.file(sheetPath)?.async('text');
     if (!sheetXML) throw new Error(`Data for worksheet "${sheetName}" not found.`);
     console.log("Sheet XML:", sheetXML, "Length:", sheetXML.length)
 
-
     // Parse shared strings for textual cell values
-    const sharedStringsXML = await zipContent.file('xl/sharedStrings.xml')?.async('string');
+    const sharedStringsXML_ = zipContent.file('xl/sharedStrings.xml') //?.async('text');
+    console.log("Shared strings1:", sharedStringsXML_)
+    const sharedStringsXML = sharedStringsXML_ ? await sharedStringsXML_.async('text') : null;
+    console.log("Shared strings2:", sharedStringsXML)
     const sharedStrings: string[] = [];
     if (sharedStringsXML) {
         const sharedStringsDoc = parser.parseFromString(sharedStringsXML, 'application/xml');

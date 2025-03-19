@@ -16,7 +16,9 @@ let xlsData: ArrayBuffer = new ArrayBuffer()
 describe('xlsxReader', () => {
   beforeAll(() => {
     console.log("Test start")
-  });
+    tables = []
+    xlsData = new ArrayBuffer()
+  }) 
 
   beforeEach(() => {
     vi.stubGlobal('fetch', async (url) => {
