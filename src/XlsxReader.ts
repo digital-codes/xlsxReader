@@ -1,13 +1,13 @@
 import JSZip from 'jszip';
 
-async function getWorksheetNames(blob: Blob): Promise<string[]> {
+async function getWorksheetNames(input: Blob | ArrayBuffer): Promise<string[]> {
     const zip = new JSZip();
-    const buffer = await blob.arrayBuffer(); // Convert Blob to ArrayBuffer
+    const buffer = input instanceof Blob ? await input.arrayBuffer() : input; // Convert Blob to ArrayBuffer if needed
     const zipContent = await zip.loadAsync(buffer);
 
     const workbookXML = await zipContent.file('xl/workbook.xml')?.async('string');
     if (!workbookXML) throw new Error('Workbook metadata not found.');
-
+    console.log("XML:",workbookXML)
     const parser = new DOMParser();
     const workbookDoc = parser.parseFromString(workbookXML, 'application/xml');
     const sheets = workbookDoc.getElementsByTagName('sheet');
@@ -22,10 +22,11 @@ async function getWorksheetNames(blob: Blob): Promise<string[]> {
     return sheetNames;
 }
 
-async function readWorksheetByName(blob: Blob, sheetName: string): Promise<any[]> {
+async function readWorksheetByName(input: Blob | ArrayBuffer, sheetName: string): Promise<any[]> {
     const zip = new JSZip();
-    const buffer = await blob.arrayBuffer(); // Convert Blob to ArrayBuffer
+    const buffer = input instanceof Blob ? await input.arrayBuffer() : input; // Convert Blob to ArrayBuffer if needed
     const zipContent = await zip.loadAsync(buffer);
+    console.log(zipContent.files);
 
     // Read workbook metadata to find the sheet ID corresponding to the name
     const workbookXML = await zipContent.file('xl/workbook.xml')?.async('string');
@@ -45,10 +46,16 @@ async function readWorksheetByName(blob: Blob, sheetName: string): Promise<any[]
     }
     if (!sheetId) throw new Error(`Worksheet "${sheetName}" not found.`);
 
+    console.log("Sheet ID:", sheetId)
+
     // Map sheet ID to file path (e.g., "sheet1.xml")
     const sheetPath = `xl/worksheets/sheet${sheetId}.xml`;
-    const sheetXML = await zipContent.file(sheetPath)?.async('string');
+    console.log("Sheet Path:", sheetPath)
+
+    const sheetXML = await zipContent.file(sheetPath)?.async('string'); 
     if (!sheetXML) throw new Error(`Data for worksheet "${sheetName}" not found.`);
+    console.log("Sheet XML:", sheetXML, "Length:", sheetXML.length)
+
 
     // Parse shared strings for textual cell values
     const sharedStringsXML = await zipContent.file('xl/sharedStrings.xml')?.async('string');
