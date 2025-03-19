@@ -1,6 +1,6 @@
-**xlsxreader v0.1.0** • [**Docs**](globals.md)
+**xlsxreader v0.1.0**
 
 ***
 
-# dataPipes
-Simple browser drawing tool for simple data pipelines
+# xlsxReader
+Simple browser xlsx reader

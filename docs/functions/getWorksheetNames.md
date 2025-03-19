@@ -1,21 +1,21 @@
-[**xlsxreader v0.1.0**](../README.md) • **Docs**
+[**xlsxreader v0.1.0**](../README.md)
 
 ***
 
-[xlsxreader v0.1.0](../globals.md) / getWorksheetNames
+[xlsxreader](../globals.md) / getWorksheetNames
 
 # Function: getWorksheetNames()
 
 > **getWorksheetNames**(`blob`): `Promise`\<`string`[]\>
 
+Defined in: [XlsxReader.ts:3](https://github.com/digital-codes/xlsxReader/blob/9897b157302ed5d353d604a2fc93badca52eab2e/src/XlsxReader.ts#L3)
+
 ## Parameters
 
-• **blob**: `Blob`
+### blob
+
+`Blob`
 
 ## Returns
 
 `Promise`\<`string`[]\>
-
-## Defined in
-
-[XlsxReader.ts:3](https://github.com/digital-codes/xlsxReader/blob/16206563945140905ebda5b2a9a4782300c9a5cc/src/XlsxReader.ts#L3)
