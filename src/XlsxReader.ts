@@ -63,7 +63,7 @@ async function readWorksheetByName(input: Blob | ArrayBuffer, sheetName: string)
     const sheetXML_ = zipContent.file(sheetPath)
     console.log("Sheet XML:", sheetXML_)
 
-    const sheetXML = zipContent.file(sheetPath)?.async('text');
+    const sheetXML = await zipContent.file(sheetPath)?.async('text');
     if (!sheetXML) throw new Error(`Data for worksheet "${sheetName}" not found.`);
     console.log("Sheet XML:", sheetXML, "Length:", sheetXML.length)
 
