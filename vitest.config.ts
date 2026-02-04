@@ -13,8 +13,7 @@ export default defineConfig({
     browser: {
       provider: "webdriverio", //'playwright', // or 'webdriverio'
       enabled: true,
-      headless: true
-      // name: 'firefox', // browser name is required
+      name: 'firefox', // browser name is required
     },
 
   },
